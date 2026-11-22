@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: gof
+      POSTGRES_USER: gof
+      POSTGRES_PASSWORD: gof
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  web:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://gof:gof@db:5432/gof
+      DEBUG: "True"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+volumes:
+  pgdata:

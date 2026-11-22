@@ -1,0 +1,52 @@
+{% load static seo %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}Math, Science, English and Computer Olympiads for students in Classes 1 to 12. Register online and track your status.{% endblock %}">
+  <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+  <link rel="canonical" href="{% block canonical %}{{ CANONICAL_URL }}{% endblock %}">
+  <meta property="og:site_name" content="{{ SITE_NAME }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }}{% endblock %}">
+  <meta property="og:url" content="{{ CANONICAL_URL }}">
+  <meta name="theme-color" content="#16213E">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block jsonld %}{% endblock %}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="{% url 'core:home' %}">
+        <svg width="28" height="28" viewBox="0 0 32 32" role="img" aria-label="GOF Olympiad logo"><rect width="32" height="32" rx="6" fill="#16213E"/><path d="M8 22 L14 10 L18 18 L24 8" fill="none" stroke="#F5B700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>GOF Olympiad</span>
+      </a>
+      <nav aria-label="Main">
+        <ul id="nav-links">
+          <li><a href="{% url 'core:home' %}#subjects">Subjects</a></li>
+          <li><a href="{% url 'core:home' %}#exam-info">Exam information</a></li>
+          <li data-guest><a href="{% url 'core:login' %}">Student login</a></li>
+          <li data-guest><a class="btn btn-small" href="{% url 'core:register' %}">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>{{ SITE_NAME }}. A demonstration prototype built for an assignment. It uses dummy data only; please do not enter real student details.</p>
+      <p><a href="{% url 'core:staff_login' %}">Staff login</a></p>
+    </div>
+  </footer>
+  <script src="{% static 'js/site.js' %}" defer></script>
+  <script src="{% static 'js/app/api.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load seo %}
+{% block title %}Olympiads for Classes 1 to 12: Maths, Science, English, Computer | {{ SITE_NAME }}{% endblock %}
+{% block og_title %}Olympiads for Classes 1 to 12{% endblock %}
+{% block jsonld %}{% jsonld jsonld_org %}{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Olympiads that reward how you think, not what you memorised.</h1>
+      <p class="lead">Four subject Olympiads for students from Class 1 to Class 12. Register in two minutes, get your registration number straight away, and track your status online.</p>
+      <p class="actions">
+        <a class="btn" href="{% url 'core:register' %}">Register a student</a>
+        <a class="btn btn-ghost" href="#subjects">See the subjects</a>
+      </p>
+    </div>
+    <aside class="puzzle" aria-labelledby="puzzle-title">
+      <h2 id="puzzle-title">Try a sample question</h2>
+      <p class="puzzle-seq" aria-label="2, 6, 12, 20, what comes next?">2, 6, 12, 20, <span aria-hidden="true">?</span></p>
+      <p>What number comes next in the sequence?</p>
+      <details>
+        <summary>Show the answer</summary>
+        <p><strong>30.</strong> The gaps are 4, 6 and 8, so the next gap is 10. Each term is also n &times; (n + 1).</p>
+      </details>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="subjects" aria-labelledby="subjects-title">
+  <div class="wrap">
+    <h2 id="subjects-title">Choose an Olympiad</h2>
+    <div class="subject-grid">
+      {% for o in olympiads %}
+        <article class="subject">
+          <h3><a href="{{ o.get_absolute_url }}">{{ o.subject }}</a></h3>
+          <p>{{ o.tagline }}</p>
+          <p class="meta">{{ o.class_range }} &middot; {{ o.duration_minutes }} minutes</p>
+          <p><a class="btn btn-small" href="{% url 'core:register' %}?subject={{ o.slug }}">Register for {{ o.subject }}</a></p>
+        </article>
+      {% empty %}
+        <p>Olympiads will be listed here once they are published.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="exam-info" aria-labelledby="exam-title">
+  <div class="wrap two-col">
+    <div>
+      <h2 id="exam-title">How the examination works</h2>
+      <ol class="steps">
+        <li><strong>Register.</strong> Fill in the student and parent details and give parent or guardian consent. You receive a registration number immediately.</li>
+        <li><strong>Prepare.</strong> Each Olympiad publishes a syllabus overview, built around the school curriculum.</li>
+        <li><strong>Take the exam.</strong> Students sit a timed multiple-choice paper at their own class level.</li>
+        <li><strong>Check your status.</strong> Log in to see whether your registration is pending, confirmed or needs attention.</li>
+      </ol>
+    </div>
+    <dl class="facts">
+      <div><dt>Open to</dt><dd>Classes 1 to 12</dd></div>
+      <div><dt>Format</dt><dd>Online, timed, multiple choice</dd></div>
+      <div><dt>Duration</dt><dd>45 to 60 minutes, by subject</dd></div>
+      <div><dt>Sample exam date</dt><dd>14 February 2027</dd></div>
+      <div><dt>Registration fee</dt><dd>None in this prototype</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section cta" aria-labelledby="cta-title">
+  <div class="wrap">
+    <h2 id="cta-title">Ready to register?</h2>
+    <p>It takes about two minutes. A parent or guardian needs to agree to the consent statement.</p>
+    <p><a class="btn" href="{% url 'core:register' %}">Start registration</a></p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My registration | {{ SITE_NAME }}{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+{% block content %}
+<section class="wrap narrow section">
+  <h1>My registration</h1>
+  <p id="flash" class="notice notice-success hidden" role="status"></p>
+  <div id="dashboard" aria-live="polite"><p>Loading your registration...</p></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/app/student.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load seo %}
+{% block title %}{{ olympiad.name }}: eligibility, syllabus and registration | {{ SITE_NAME }}{% endblock %}
+{% block description %}{{ olympiad.tagline }} Open to {{ olympiad.class_range|lower }}. See the syllabus overview and register online.{% endblock %}
+{% block og_title %}{{ olympiad.name }}{% endblock %}
+{% block jsonld %}{% jsonld jsonld %}{% endblock %}
+{% block content %}
+<article class="wrap narrow section">
+  <nav aria-label="Breadcrumb" class="crumbs"><a href="{% url 'core:home' %}">Home</a> / <a href="{% url 'core:home' %}#subjects">Olympiads</a> / {{ olympiad.subject }}</nav>
+  <h1>{{ olympiad.name }}</h1>
+  <p class="lead">{{ olympiad.tagline }}</p>
+  <p>{{ olympiad.description }}</p>
+  <p class="actions"><a class="btn" href="{% url 'core:register' %}?subject={{ olympiad.slug }}">Register for {{ olympiad.subject }}</a></p>
+
+  <h2>Eligibility</h2>
+  <p>{{ olympiad.eligibility }}</p>
+
+  <h2>Classes and exam details</h2>
+  <dl class="facts">
+    <div><dt>Classes</dt><dd>{{ olympiad.class_range }}</dd></div>
+    <div><dt>Format</dt><dd>{{ olympiad.exam_mode }}</dd></div>
+    <div><dt>Duration</dt><dd>{{ olympiad.duration_minutes }} minutes</dd></div>
+    {% if olympiad.exam_date %}<div><dt>Sample exam date</dt><dd><time datetime="{{ olympiad.exam_date|date:'Y-m-d' }}">{{ olympiad.exam_date|date:"j F Y" }}</time></dd></div>{% endif %}
+  </dl>
+
+  <h2>Syllabus overview</h2>
+  <ul class="syllabus">
+    {% for item in olympiad.syllabus_items %}<li>{{ item }}</li>{% endfor %}
+  </ul>
+
+  <p class="actions"><a class="btn" href="{% url 'core:register' %}?subject={{ olympiad.slug }}">Register for {{ olympiad.subject }}</a></p>
+</article>
+{% endblock %}

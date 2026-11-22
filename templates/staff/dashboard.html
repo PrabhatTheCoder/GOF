@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Registrations | Staff | {{ SITE_NAME }}{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+{% block content %}
+<section class="wrap section">
+  <h1>Registrations</h1>
+
+  <dl class="stats">
+    <div><dt>Total</dt><dd id="stat-total">-</dd></div>
+    <div><dt>Pending</dt><dd id="stat-pending">-</dd></div>
+    <div><dt>Confirmed</dt><dd id="stat-confirmed">-</dd></div>
+    <div><dt>Rejected</dt><dd id="stat-rejected">-</dd></div>
+  </dl>
+
+  <div id="form-alert" class="notice hidden" role="status" tabindex="-1"></div>
+
+  <form id="filters" class="filters" role="search" aria-label="Filter registrations">
+    <div class="field"><label for="f-search">Search</label><input id="f-search" type="search" name="search" placeholder="Name, email or registration number"></div>
+    <div class="field"><label for="f-class">Class</label>
+      <select id="f-class" name="class"><option value="">All classes</option>
+        {% for n in classes %}<option value="{{ n }}">Class {{ n }}</option>{% endfor %}
+      </select></div>
+    <div class="field"><label for="f-subject">Subject</label>
+      <select id="f-subject" name="subject"><option value="">All subjects</option>
+        <option>Mathematics</option><option>Science</option><option>English</option><option>Computer</option>
+      </select></div>
+    <div class="field"><label for="f-status">Status</label>
+      <select id="f-status" name="status"><option value="">Any status</option>
+        <option value="pending">Pending review</option><option value="confirmed">Confirmed</option><option value="rejected">Rejected</option>
+      </select></div>
+    <div class="filter-actions">
+      <button class="btn btn-small" type="submit">Apply filters</button>
+      <button class="btn btn-small btn-ghost" type="button" id="clear">Clear</button>
+      <button class="btn btn-small btn-ghost" type="button" id="export">Export CSV (all)</button>
+    </div>
+  </form>
+
+  <p class="meta" id="summary" aria-live="polite">Loading...</p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Registrations table">
+    <table>
+      <thead><tr><th scope="col">Number</th><th scope="col">Student</th><th scope="col">Class</th><th scope="col">School, city</th><th scope="col">Parent</th><th scope="col">Olympiad</th><th scope="col">Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <nav class="pager" id="pager" aria-label="Pagination"></nav>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/app/staff.js' %}" defer></script>{% endblock %}
