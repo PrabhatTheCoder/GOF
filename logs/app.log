@@ -266,3 +266,12 @@
 [23-Nov-2026 00:56:31] INFO [django.server:213] "GET /static/js/app/register.js HTTP/1.1" 304 0
 [23-Nov-2026 00:56:31] INFO [django.server:213] "GET /api/v1/olympiads/ HTTP/1.1" 200 1051
 [23-Nov-2026 00:56:33] INFO [django.server:213] "GET / HTTP/1.1" 200 6623
+[23-Nov-2026 01:38:18] INFO [django.utils.autoreload:667] Watching for file changes with StatReloader
+[23-Nov-2026 01:50:40] INFO [django.utils.autoreload:667] Watching for file changes with StatReloader
+[23-Nov-2026 01:51:46] INFO [django.utils.autoreload:667] Watching for file changes with StatReloader
+[23-Nov-2026 01:52:01] INFO [django.server:213] "GET / HTTP/1.1" 200 6623
+[23-Nov-2026 01:52:01] INFO [django.server:213] "GET /static/css/site.css HTTP/1.1" 200 8728
+[23-Nov-2026 01:52:01] INFO [django.server:213] "GET /static/js/site.js HTTP/1.1" 200 876
+[23-Nov-2026 01:52:01] INFO [django.server:213] "GET /static/js/app/api.js HTTP/1.1" 200 8226
+[23-Nov-2026 01:52:01] INFO [django.server:213] "GET /static/img/favicon.svg HTTP/1.1" 200 249
+[23-Nov-2026 01:53:22] INFO [django.utils.autoreload:667] Watching for file changes with StatReloader

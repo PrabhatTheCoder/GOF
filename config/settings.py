@@ -17,17 +17,9 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = 'django-insecure-k&+a%=vt3(j)+e+w54p!#5i+0yx)1zzf^1#kkrk3v(#8koii*s'
 
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1",
-    cast=Csv(),
-)
+ALLOWED_HOSTS = [".vercel.app","localhost","127.0.0.1",]
 
-CSRF_TRUSTED_ORIGINS = config(
-    "CSRF_TRUSTED_ORIGINS",
-    default="",
-    cast=Csv(),
-)
+CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app",]
 
 SITE_URL = config(
     "SITE_URL",
@@ -124,14 +116,19 @@ TEMPLATES = [
 # DATABASE
 # =====================================================
 
-DATABASE_URL = config("DATABASE_URL", default="")
-
 DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL or f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT", default=5432, cast=int),
+        "OPTIONS": {
+            "sslmode": "require",
+        },
+        "CONN_MAX_AGE": 60,
+    }
 }
 
 
