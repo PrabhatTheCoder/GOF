@@ -316,15 +316,13 @@ SIMPLE_JWT = {
 
 LOG_DIR = BASE_DIR / "logs"
 
+IS_VERCEL = config("VERCEL", default="0") == "1"
 
 LOGGING = {
-
     "version": 1,
-
     "disable_existing_loggers": False,
 
     "formatters": {
-
         "standard": {
             "format": (
                 "[%(asctime)s] %(levelname)s "
@@ -332,21 +330,41 @@ LOGGING = {
             ),
             "datefmt": "%d-%b-%Y %H:%M:%S",
         },
-
     },
 
     "handlers": {
-
         "console": {
             "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
+    },
 
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+
+        "apps": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+# Local development: File logging enabled
+if not IS_VERCEL:
+
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+    LOGGING["handlers"].update({
         "app_file": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": LOG_DIR / "app.log",
+            "filename": str(LOG_DIR / "app.log"),
             "maxBytes": 50 * 1024 * 1024,
             "backupCount": 10,
             "formatter": "standard",
@@ -356,32 +374,21 @@ LOGGING = {
         "error_file": {
             "level": "ERROR",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": LOG_DIR / "error.log",
+            "filename": str(LOG_DIR / "error.log"),
             "maxBytes": 50 * 1024 * 1024,
             "backupCount": 10,
             "formatter": "standard",
             "encoding": "utf-8",
         },
+    })
 
-    },
+    LOGGING["loggers"]["django"]["handlers"] = [
+        "console", "app_file", "error_file"
+    ]
 
-    "loggers": {
-
-        "django": {
-            "handlers": ["console", "app_file", "error_file"],
-            "level": "INFO",
-            "propagate": False,
-        },
-
-        "apps": {
-            "handlers": ["console", "app_file", "error_file"],
-            "level": "INFO",
-            "propagate": False,
-        },
-
-    },
-
-}
+    LOGGING["loggers"]["apps"]["handlers"] = [
+        "console", "app_file", "error_file"
+    ]
 
 
 # =====================================================
